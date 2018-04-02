@@ -1,0 +1,8 @@
+{
+  "name": "skyward-app",
+  "app_id": "fae2dbb7",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

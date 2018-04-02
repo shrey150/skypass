@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+	    {{generalClass.name}}<div *ngIf="sandboxMode"> (Sandbox Mode)</div>
+    </ion-title>
+    <ion-buttons start>
+    	<button ion-button icon-only (click)="toggleSandbox()"><ion-icon name="create"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<br>
+	<h1 text-center ion-text>Grade: {{generalClass.grade}}%</h1>
+	<h1 text-center ion-text *ngIf="sandboxMode && sandboxDone">Sandbox: {{sandboxGrade}}%</h1>
+	<ion-item *ngFor="let category of classData">
+		<ion-card>
+		
+			<ion-card-header>
+				<ion-item>
+					<h2 ion-text><b>{{category.category}}</b></h2>
+					<ion-note item-end>{{(category.score.earned / category.score.total * 100).toFixed(2)}}%</ion-note>
+				</ion-item>
+			</ion-card-header>
+			<hr>
+			<ion-card-content>
+				<ion-item *ngFor="let grade of category.assignments">
+					<h3 ion-text>{{grade.title}}</h3>
+					<ion-note item-end>{{(grade.score.earned / grade.score.total * 100).toFixed(2)}}%</ion-note>
+				</ion-item>
+				<div *ngIf="sandboxMode">
+					<ion-item *ngFor="let test of sandboxScores">
+						<h3 ion-text color="primary">{{test.name}}</h3>
+						<ion-note item-end>{{(test.score.earned / test.score.total * 100).toFixed(2)}}%</ion-note>
+					</ion-item>
+					<hr>
+					<ion-item>
+						<!--ion-input type="text" placeholder="Assignment" item-start></ion-input-->
+						<ion-input type="number" placeholder="10" item-start text-right [(ngModel)]="sandboxInputs.earned"></ion-input>
+						<ion-label>/</ion-label>
+						<ion-input type="number" placeholder="10" item-end [(ngModel)]="sandboxInputs.total"></ion-input>
+						<ion-buttons start item-end>
+							<button ion-button icon-only clear (click)="addGrade(category.category)"><ion-icon name="add-circle"></ion-icon></button>
+						</ion-buttons>
+					</ion-item>
+				</div>
+			</ion-card-content>
+		
+		</ion-card>
+	</ion-item>
+
+</ion-content>

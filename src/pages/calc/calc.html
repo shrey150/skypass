@@ -1,0 +1,40 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			Calculator
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<form (ngSubmit)="calculate()">
+		<ion-list>
+			<br>
+			<ion-item>
+				<ion-label>Class to calculate for</ion-label>
+				<ion-select multiple="false"  [(ngModel)]="check.class" name="class">
+					<ion-option disabled selected>Choose a class...</ion-option>
+					<ion-option *ngFor="let class of classes" [value]="class.name">{{class.name}}</ion-option>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label>Grade you want to earn</ion-label>
+				<ion-input type="number" placeholder="100" min="1" max="100" [(ngModel)]="check.grade" name="grade"></ion-input>
+			</ion-item>
+			<button ion-button color="primary" block>Check</button>
+		</ion-list>
+	</form>
+	<div style="display: block;" *ngIf="calculated">
+	<h3>You need {{results.pointsNeeded}} points to get a {{check.grade}}</h3>
+    <canvas baseChart width="100%" height="100%"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+    </div>
+	<!--div style="display: block;"><canvas baseChart width="300" height="400" [datasets]="chart.data" [labels]="chart.labels" [options]="chart.options" [colors]="chart.colors" [legend]="chart.legend" [chartType]="chart.type" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas></div-->
+</ion-content>

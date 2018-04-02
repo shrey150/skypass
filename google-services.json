@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "772831499108",
+    "firebase_url": "https://skyward-app.firebaseio.com",
+    "project_id": "skyward-app",
+    "storage_bucket": "skyward-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772831499108:android:2597ba4a78a8a948",
+        "android_client_info": {
+          "package_name": "com.shreypandya.skywardapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772831499108-h3k746kue8aa8fseikq2h5pvt43ps66u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7rqU6he29eFbBocJAAm3ZqII8F7HXie8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
