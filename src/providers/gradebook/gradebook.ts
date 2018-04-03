@@ -57,13 +57,13 @@ export class GradebookProvider {
 
 					weightPool -= weight;
 
-					if (weight == 0 && total !== null) {
+					if (weight == 0 && total != null) {
 
 						//console.log("Incorrect scrape!");
 
 						redoGrades.push(earned / total);
 
-					} else if (weight === null && total !== null) {
+					} else if (weight == null && total != null) {
 
 						//console.log("Default weightage to be added");
 
