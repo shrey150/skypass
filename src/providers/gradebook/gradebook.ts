@@ -138,4 +138,31 @@ export class GradebookProvider {
 
 	}
 
+	fetchClassOld(markingPd : string, index : string) {
+
+		return new Promise((resolve, reject) => {
+
+			var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
+			var grades = [];
+
+			firebase.database().ref(user + "/grades/" + markingPd + "_old").once("value").then(snapshot => {
+
+				snapshot.forEach(childSnapshot => {
+
+					var oldGrade = childSnapshot.child(index).val();
+
+					//console.log("CODE");
+
+					//console.log(oldGrade);
+
+					grades.push(oldGrade);
+
+				});
+
+			}).then(() => {resolve(grades)});
+
+		});
+
+	}
+
 }

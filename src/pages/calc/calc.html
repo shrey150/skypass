@@ -26,7 +26,7 @@
 	</form>
 	<div style="display: block;" *ngIf="calculated">
 	<h3>You need {{results.pointsNeeded}} points to get a {{check.grade}}</h3>
-    <canvas baseChart width="100%" height="100%"
+    <canvas baseChart
                 [datasets]="lineChartData"
                 [labels]="lineChartLabels"
                 [options]="lineChartOptions"
@@ -36,5 +36,4 @@
                 (chartHover)="chartHovered($event)"
                 (chartClick)="chartClicked($event)"></canvas>
     </div>
-	<!--div style="display: block;"><canvas baseChart width="300" height="400" [datasets]="chart.data" [labels]="chart.labels" [options]="chart.options" [colors]="chart.colors" [legend]="chart.legend" [chartType]="chart.type" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas></div-->
 </ion-content>

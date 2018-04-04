@@ -40,13 +40,14 @@ export class CalcPage {
 	calculate() {
 
 		console.log("Calculating...");
-		console.log(this.check);
+		 console.log(this.check);
 
 		var pointsNeeded;
+		var graphData = [];
 
 		this.classes.forEach(element => {
 
-			console.log(element);
+			//console.log(element);
 
 			if (element.name == this.check.class) {
 
@@ -68,6 +69,20 @@ export class CalcPage {
 				//
 				//***this may be iffy, add in sandbox feature & graph stats first
 
+				var gradeHistory = this.gradebook.fetchClassOld(this.dataLit, element.index);
+
+				gradeHistory.then(value => {
+
+					for (var i = 0; i < value.length; i++) {
+
+						graphData.push(value[i].grade);
+
+					}
+
+					graphData.push(element.grade);
+
+				});
+
 			}
 
 		});
@@ -76,8 +91,13 @@ export class CalcPage {
 
 		//this.results.pointsNeeded = pointsNeeded;
 
-		this.lineChartData.push({data: [97, 95, 94, 96, 97], label: "AP HUMAN GEOGRAPHY"});
-		this.lineChartLabels = ['January', 'February', 'March', 'April', 'May'];
+		this.lineChartData.push({data: graphData, label: this.check.class});
+		//this.lineChartLabels = Array(graphData.length).fill("");
+		this.lineChartLabels = ["", "", ""];
+
+		console.log(this.lineChartData);
+		console.log(this.lineChartLabels);
+
 		this.calculated = true;
 
 	}
