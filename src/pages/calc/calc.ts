@@ -69,7 +69,7 @@ export class CalcPage {
 				//
 				//***this may be iffy, add in sandbox feature & graph stats first
 
-				var gradeHistory = this.gradebook.fetchClassOld(this.dataLit, element.index);
+				var gradeHistory : any = this.gradebook.fetchClassOld(this.dataLit, element.index);
 
 				gradeHistory.then(value => {
 
