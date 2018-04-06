@@ -24,8 +24,12 @@
 			<button ion-button color="primary" block>Check</button>
 		</ion-list>
 	</form>
-	<div style="display: block;" *ngIf="calculated">
-	<h3>You need {{results.pointsNeeded}} points to get a {{check.grade}}</h3>
+	<div style="display: block; padding: 5px;" *ngIf="calculated">
+	<h4>You need a {{results.targetGrade}}% in the {{results.name}} category to get a {{check.grade}}% overall.</h4>
+	<h4>You need a 100% on a {{results.pointsNeeded}}-pt {{results.name}} assignment to get a {{check.grade}}% overall.</h4>
+	<hr>
+	<h4>You currently have a {{results.oldGrade}}% in the {{results.name}} category.</h4>
+	<h4>Grade History:</h4>
     <canvas baseChart
                 [datasets]="lineChartData"
                 [labels]="lineChartLabels"

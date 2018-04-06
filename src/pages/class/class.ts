@@ -11,7 +11,7 @@ import { GradebookProvider } from '../../providers/gradebook/gradebook';
 export class ClassPage {
 
 	generalClass = {};
-	classData = [];
+	classData : any = [];
 	sandboxData = [];
 	sandboxInputs = {earned: null, total: null};
 
@@ -24,7 +24,12 @@ export class ClassPage {
 	constructor(public navCtrl: NavController, public navParams: NavParams, public gradebook : GradebookProvider) {
 
 		this.generalClass = navParams.get("classData");
-		this.classData = gradebook.fetchClass(navParams.get("markingPd"), navParams.get("index"));
+
+		gradebook.fetchClass(navParams.get("markingPd"), navParams.get("index")).then(value => {
+
+			this.classData = value;
+
+		});
 
 	}
 
@@ -40,8 +45,6 @@ export class ClassPage {
 	addGrade(category : string) {
 
 		var finalGrade = 0;
-
-		console.log(this.classData);
 
 		if (this.sandboxMode) {
 
@@ -64,8 +67,12 @@ export class ClassPage {
 
 				}
 
+				console.log(this.sandboxData[i].weight + ", " + earned + "/" + total);
+
 				var grade = this.sandboxData[i].weight * (earned / total);
 				finalGrade += grade;
+
+				console.log("SO far: " + finalGrade);
 
 			}
 

@@ -98,43 +98,56 @@ export class GradebookProvider {
 
 	fetchClass(markingPd : string, index : string) {
 
-		var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
-		var userClass = [];
+		return new Promise((resolve, reject) => {
 
-		firebase.database().ref(user + "/grades/" + markingPd + "/" + index + "/report").once("value").then(snapshot => {
+			var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
+			var userClass = [];
 
-			snapshot.forEach(childSnapshot => {
+			firebase.database().ref(user + "/grades/" + markingPd + "/" + index + "/report").once("value").then(snapshot => {
 
-				if (childSnapshot.child("score").exists()) {
+				snapshot.forEach(childSnapshot => {
 
-					userClass.push(childSnapshot.val());
+					if (childSnapshot.child("score").exists()) {
+
+						userClass.push(childSnapshot.val());
+
+					}
+
+				});
+
+				var weightPool = 100;
+				var i = 0;
+
+				var fixIndex = null;
+
+				userClass.forEach(element => {
+
+					//console.log("Checking " + element.category);
+					//console.log("Weight: " + element.weight);
+
+					weightPool -= element.weight;
+
+					if (element.weight == 0) {
+
+						//console.log("Marking a fix for " + i);
+
+						fixIndex = i;
+
+					}
+
+					i++;
+
+				});
+
+				if (fixIndex !== null) {
+
+					userClass[fixIndex].weight = weightPool;
 
 				}
 
-			});
-
-			var weightPool = 100;
-			var i = 0;
-
-			var fixIndex = 0;
-
-			userClass.forEach(element => {
-
-				weightPool -= element.weight;
-
-				if (element.weight == 0) {
-
-					fixIndex = i;
-
-				}
-
-			});
-
-			userClass[fixIndex].weight = weightPool;
+			}).then(() => {resolve(userClass)});
 
 		});
-
-		return userClass;
 
 	}
 

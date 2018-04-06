@@ -13,7 +13,10 @@ export class CalcPage {
 	dataLit = "3RD";
 	check = {class: "", grade: ""};
 
-	results = {};
+	results : any = {};
+
+	//---------------------------------------------
+	//Set up graph variables
 
 	lineChartData : Array<any> = [];
   	lineChartLabels : Array<any> = [];
@@ -28,6 +31,7 @@ export class CalcPage {
     }];
   	lineChartLegend : boolean = false;
   	lineChartType : string = 'line';
+  	//---------------------------------------------
 
   	calculated = false;
 
@@ -40,14 +44,11 @@ export class CalcPage {
 	calculate() {
 
 		console.log("Calculating...");
-		 console.log(this.check);
 
 		var pointsNeeded;
 		var graphData = [];
 
 		this.classes.forEach(element => {
-
-			//console.log(element);
 
 			if (element.name == this.check.class) {
 
@@ -69,6 +70,61 @@ export class CalcPage {
 				//
 				//***this may be iffy, add in sandbox feature & graph stats first
 
+				var classGrades : any = this.gradebook.fetchClass(this.dataLit, element.index);
+
+				classGrades.then(value => {
+
+					var highestWeight = 0;
+					var highestName = "";
+
+					var highestEarned = 0;
+					var highestTotal = 0;
+
+					var weightedTarget : any = this.check.grade;
+					var targetGrade : any = 0;
+
+					var oldGrade;
+					var oldOverall;
+
+					value.forEach(element => {
+
+						if (element.weight > highestWeight) {
+
+							highestWeight = element.weight;
+							highestEarned = element.score.earned;
+							highestTotal = element.score.total;
+							highestName = element.category;
+
+						}
+
+					});
+
+					value.forEach(element => {
+
+						if (element.weight !== highestWeight) {
+
+							weightedTarget -= element.weight * (element.score.earned / element.score.total);
+
+						}
+
+					});
+
+					targetGrade = weightedTarget / highestWeight;
+
+					console.log("Weighted: " + weightedTarget);
+					console.log("Target: " + targetGrade);
+
+					var pointsNeeded = ((targetGrade * highestTotal) - highestEarned) / (1 - targetGrade);
+
+					this.results.pointsNeeded = Math.ceil(pointsNeeded);
+					this.results.targetGrade = (100 * targetGrade).toFixed(2);
+					this.results.name = highestName;
+
+					this.results.oldGrade = (100 * highestEarned / highestTotal).toFixed(2);
+
+				});
+
+
 				var gradeHistory : any = this.gradebook.fetchClassOld(this.dataLit, element.index);
 
 				gradeHistory.then(value => {
@@ -77,28 +133,22 @@ export class CalcPage {
 
 						graphData.push(value[i].grade);
 
+						console.log(value[i].grade);
+
 					}
 
 					graphData.push(element.grade);
+
+					this.lineChartData.push({data: graphData, label: this.check.class});
+					this.lineChartLabels = Array(graphData.length).fill("");
+
+					this.calculated = true;
 
 				});
 
 			}
 
 		});
-
-		console.log("Points needed: " + pointsNeeded);
-
-		//this.results.pointsNeeded = pointsNeeded;
-
-		this.lineChartData.push({data: graphData, label: this.check.class});
-		//this.lineChartLabels = Array(graphData.length).fill("");
-		this.lineChartLabels = ["", "", ""];
-
-		console.log(this.lineChartData);
-		console.log(this.lineChartLabels);
-
-		this.calculated = true;
 
 	}
 
