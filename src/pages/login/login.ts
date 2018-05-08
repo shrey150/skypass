@@ -11,7 +11,6 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { TabsPage } from '../tabs/tabs';
 import { AlertController } from 'ionic-angular';
 
-// import * as firebase from 'firebase';
 
 @IonicPage()
 @Component({
@@ -23,7 +22,8 @@ export class LoginPage {
 	public form : FormGroup;
 
 	constructor(public alertCtrl : AlertController, public navCtrl: NavController, public navParams: NavParams, public _FB : FormBuilder, public _AUTH : AuthProvider) {
-	
+
+		// Set up a form template
 		this.form = this._FB.group({
 			"username" 	: ["", Validators.required],
 			"password" 	: ["", Validators.required]
@@ -31,6 +31,7 @@ export class LoginPage {
 
 	}
 
+	// reusable code to show a popup
 	showAlert(title, message) {
 
 		let alert = this.alertCtrl.create({
@@ -51,6 +52,7 @@ export class LoginPage {
 
 		this._AUTH.login(username, password).then((auth : any) => {
 
+			// moves user to main part of app
 			this.navCtrl.setRoot(TabsPage);
 
 		}).catch((error : any) => {
@@ -70,6 +72,7 @@ export class LoginPage {
 
 		this._AUTH.signup(username, password).then((auth : any) => {
 
+			// moves user to main part of app
 			this.navCtrl.setRoot(TabsPage);
 
 		}).catch((error : any) => {

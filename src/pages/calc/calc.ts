@@ -10,7 +10,7 @@ import { ChartsModule } from 'ng2-charts';
 export class CalcPage {
 
 	classes = [];
-	dataLit = "3RD";
+	dataLit = "4TH";
 	check = {class: "", grade: ""};
 
 	results : any = {};
@@ -52,23 +52,13 @@ export class CalcPage {
 
 			if (element.name == this.check.class) {
 
-				//var pointScore = element.score.total * (this.check.grade / 100);
-				//pointsNeeded = Math.ceil(pointScore - element.score.earned);
-
-				//if (pointsNeeded < 0) {
-
-				//	pointsNeeded = 0;
-
-				//}
-
-				//TODO: get value of each category .fetchClass()
-				//and only try to work on the highest weighted category
+				//THE ALGORITHM:
+				// assume highest weighted category is most important
+				// find minimum points of a 100% assignment needed to get to desired grade
 				//
-				//TWO APPROACHES: assume lowest weighted category
-				//maintains same grade and find minimum points of a 100% assigment
-				//needed to get to desired grade
-				//
-				//***this may be iffy, add in sandbox feature & graph stats first
+				// ALSO:
+				// Calculate and display current grades to give a sense of context to the user
+				// Build a graph showing their grade history
 
 				var classGrades : any = this.gradebook.fetchClass(this.dataLit, element.index);
 
@@ -88,6 +78,7 @@ export class CalcPage {
 
 					value.forEach(element => {
 
+						// Find highest weighted category
 						if (element.weight > highestWeight) {
 
 							highestWeight = element.weight;
@@ -99,6 +90,7 @@ export class CalcPage {
 
 					});
 
+					// Find weighted grade for highest category
 					value.forEach(element => {
 
 						if (element.weight !== highestWeight) {
@@ -109,13 +101,16 @@ export class CalcPage {
 
 					});
 
+					// Find percentage grade for the category
 					targetGrade = weightedTarget / highestWeight;
 
 					console.log("Weighted: " + weightedTarget);
 					console.log("Target: " + targetGrade);
 
+					// Plug values into equation
 					var pointsNeeded = ((targetGrade * highestTotal) - highestEarned) / (1 - targetGrade);
 
+					// Display information to user
 					this.results.pointsNeeded = Math.ceil(pointsNeeded);
 					this.results.targetGrade = (100 * targetGrade).toFixed(2);
 					this.results.name = highestName;
@@ -127,6 +122,7 @@ export class CalcPage {
 
 				var gradeHistory : any = this.gradebook.fetchClassOld(this.dataLit, element.index);
 
+				// Add points to a line graph showing the change in grades over time
 				gradeHistory.then(value => {
 
 					for (var i = 0; i < value.length; i++) {
@@ -139,6 +135,8 @@ export class CalcPage {
 
 					graphData.push(element.grade);
 
+
+					// Display the information to the user
 					this.lineChartData.push({data: graphData, label: this.check.class});
 					this.lineChartLabels = Array(graphData.length).fill("");
 

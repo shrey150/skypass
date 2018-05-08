@@ -12,18 +12,28 @@ import { GradebookProvider } from '../../providers/gradebook/gradebook';
 })
 export class GradesPage {
 
-	classes = [];
-	dataLit = "3RD";
+	mps = [];
+	dataLits = ["1ST", "2ND", "3RD", "4TH"];
+	dataLit = "4TH";
 
 	loading;
 
 	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public gradebook : GradebookProvider) {
 
 		this.showLoadingScreen();
-		this.classes = gradebook.fetchAll(this.dataLit);
+
+		this.dataLits.forEach(element => {
+
+			this.mps.push(gradebook.fetchAll(element));
+
+		});
+
+		console.log(this.mps);
 
 	}
 
+	//------------------------------------------------
+	// Loading screen code
 	showLoadingScreen() {
 
 		this.loading = this.loadingCtrl.create({
@@ -39,17 +49,21 @@ export class GradesPage {
 		this.loading.dismiss();
 
 	}
+	//-------------------------------------------------
 
+
+	// Moves app to class overview page
 	showClass(index, markingPd) {
 
-		console.log("Showing grades for " + this.classes[index].name);
-		//console.log(index + " " + markingPd)
+		console.log(index, markingPd);
+
+		console.log("Showing grades for " + this.mps[markingPd][index].name + " (" + this.dataLits[markingPd] + ")");
 
 		this.navCtrl.push(ClassPage, {
 
-			classData: this.classes[index],
+			classData: this.mps[markingPd][index],
 			index: index,
-			markingPd: markingPd
+			markingPd: this.dataLits[markingPd]
 
 		});
 

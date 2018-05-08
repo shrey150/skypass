@@ -1,3 +1,4 @@
+import { AccordionComponent } from './../../components/accordion/accordion';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase';
@@ -32,6 +33,8 @@ export class ClassPage {
 		});
 
 	}
+	//--------------------------------------------------------------------------------------------------------------------------------------
+	// Sandbox mode code
 
 	toggleSandbox() {
 		
@@ -50,11 +53,14 @@ export class ClassPage {
 
 			for (var i = 0; i < this.sandboxData.length; i++) {
 
+				// Get current category score
 				var earned = this.sandboxData[i].score.earned;
 				var total = this.sandboxData[i].score.total;
 
 				console.log(this.sandboxData[i].category + " current score: " + earned + "/" + total);
 
+
+				// selecting the correct category to modify
 				if (this.sandboxData[i].category == category) {
 
 					console.log("Modifying " + category);
@@ -69,15 +75,16 @@ export class ClassPage {
 
 				console.log(this.sandboxData[i].weight + ", " + earned + "/" + total);
 
+				// Recalculating grades for sandbox mode
 				var grade = this.sandboxData[i].weight * (earned / total);
 				finalGrade += grade;
-
-				console.log("SO far: " + finalGrade);
 
 			}
 
 			console.log("New grade: " + finalGrade);
 
+
+			// Displaying info on screen
 			this.sandboxGrade = finalGrade.toFixed(2);
 			this.sandboxScores.push({name: "Test Grade", score: {earned: this.sandboxInputs.earned, total: this.sandboxInputs.total}});
 			this.sandboxDone = true;
@@ -85,5 +92,6 @@ export class ClassPage {
 		}
 
 	}
+	//--------------------------------------------------------------------------------------------------------------------------------------
 
 }

@@ -31,6 +31,8 @@ export class GradebookProvider {
 				//console.log(name);
 				//console.log("-------------------");
 
+				// For each category, get the score
+
 				childSnapshot.child("report").forEach(categorySnapshot => {
 
 					var weight = categorySnapshot.child("weight").val();
@@ -39,11 +41,19 @@ export class GradebookProvider {
 
 					//console.log("Weight " + weight + ", earned " + earned + ", total " + total);
 
+
+					// Add the scores of the categories together
+
 					var grade = weight * (earned / total);
 					finalEarned += earned;
 					finalTotal += total;
 
 					//console.log("Calculated: " + grade);
+
+					//-------------------------------------------------------------
+
+					// ERROR CASE conditionals
+					// (In case something goes wrong)
 
 					if (!isNaN(grade)) {
 
@@ -71,6 +81,8 @@ export class GradebookProvider {
 
 					}
 
+					//-------------------------------------------------------------
+
 
 				});
 
@@ -84,6 +96,7 @@ export class GradebookProvider {
 
 				console.log("Grade in " + name + ": " + finalGrade.toFixed(2));
 
+				// Add class grade to list
 				classes.push({ name: name, grade: finalGrade.toFixed(2), index: i, score: {earned: finalEarned, total: finalTotal} });
 
 				i++;
@@ -100,6 +113,7 @@ export class GradebookProvider {
 
 		return new Promise((resolve, reject) => {
 
+			// Get username
 			var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
 			var userClass = [];
 
@@ -109,11 +123,17 @@ export class GradebookProvider {
 
 					if (childSnapshot.child("score").exists()) {
 
+						// Get category data for a class and add to list
 						userClass.push(childSnapshot.val());
 
 					}
 
 				});
+
+				//-------------------------------------------------------------
+
+				// ERROR CASE conditionals
+				// (In case something goes wrong)
 
 				var weightPool = 100;
 				var i = 0;
@@ -129,8 +149,6 @@ export class GradebookProvider {
 
 					if (element.weight == 0) {
 
-						//console.log("Marking a fix for " + i);
-
 						fixIndex = i;
 
 					}
@@ -145,16 +163,22 @@ export class GradebookProvider {
 
 				}
 
+				//-------------------------------------------------------------
+
 			}).then(() => {resolve(userClass)});
 
 		});
 
 	}
 
+	// This is used to get the grade history for a user
+
 	fetchClassOld(markingPd : string, index : string) {
 
 		return new Promise((resolve, reject) => {
 
+
+			// Get username
 			var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
 			var grades = [];
 
@@ -163,10 +187,6 @@ export class GradebookProvider {
 				snapshot.forEach(childSnapshot => {
 
 					var oldGrade = childSnapshot.child(index).val();
-
-					//console.log("CODE");
-
-					//console.log(oldGrade);
 
 					grades.push(oldGrade);
 

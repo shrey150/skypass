@@ -1,3 +1,4 @@
+import { AccordionComponent } from './../components/accordion/accordion';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -25,7 +26,8 @@ import { GradebookProvider } from '../providers/gradebook/gradebook';
     CalcPage,
     TabsPage,
     LoginPage,
-    ClassPage
+    ClassPage,
+    AccordionComponent
   ],
   imports: [
     BrowserModule,

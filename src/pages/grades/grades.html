@@ -7,8 +7,9 @@
 </ion-header>
 <!--MAKE IT SO THAT ADDING A NEW GRADE DOESN'T SHIFT THE INDEX OF THE WHOLE DATA SET, RESULTING IN NEW NOTIFICATIONS FOR EVERY ASSIGNMENT-->
 <ion-content padding>
-	<ion-list>
-		<button ion-item *ngFor="let class of classes" (click)="showClass(class.index, dataLit)">
+
+	<ion-list *ngFor="let mp of mps">
+		<button ion-item *ngFor="let class of mp" (click)="showClass(class.index, mps.indexOf(mp))">
 			<ion-icon item-start name="trending-up"></ion-icon>
 			<ion-label text-left>{{class.name}}</ion-label>
 			<ion-note item-end>{{class.grade}}%</ion-note>
