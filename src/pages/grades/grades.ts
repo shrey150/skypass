@@ -51,6 +51,25 @@ export class GradesPage {
 	}
 	//-------------------------------------------------
 
+	changeMP(e) {
+
+		switch (e.direction) {
+
+			case 2:
+				//right to left
+				
+				break;
+
+			case 4:
+				//left to right
+				break;
+
+			default:
+				break;
+
+		}
+
+	}
 
 	// Moves app to class overview page
 	showClass(index, markingPd) {

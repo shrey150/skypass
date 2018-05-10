@@ -8,11 +8,25 @@
 <!--MAKE IT SO THAT ADDING A NEW GRADE DOESN'T SHIFT THE INDEX OF THE WHOLE DATA SET, RESULTING IN NEW NOTIFICATIONS FOR EVERY ASSIGNMENT-->
 <ion-content padding>
 
-	<ion-list *ngFor="let mp of mps">
-		<button ion-item *ngFor="let class of mp" (click)="showClass(class.index, mps.indexOf(mp))">
+	<ion-segment [(ngModel)]="markingPd">
+		<ion-segment-button *ngFor="let mp of mps" value={{mps.indexOf(mp)}}>
+				{{dataLits[mps.indexOf(mp)]}}
+		</ion-segment-button>
+	</ion-segment>
+
+	<ion-list>
+		<button ion-item *ngFor="let class of mps[markingPd]" (click)="showClass(class.index, markingPd)">
 			<ion-icon item-start name="trending-up"></ion-icon>
 			<ion-label text-left>{{class.name}}</ion-label>
 			<ion-note item-end>{{class.grade}}%</ion-note>
 		</button>
 	</ion-list>
+
+	<!--ion-list *ngFor="let mp of mps">
+		<button ion-item *ngFor="let class of mp" (click)="showClass(class.index, mps.indexOf(mp))">
+			<ion-icon item-start name="trending-up"></ion-icon>
+			<ion-label text-left>{{class.name}}</ion-label>
+			<ion-note item-end>{{class.grade}}%</ion-note>
+		</button>
+	</ion-list-->
 </ion-content>
