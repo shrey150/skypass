@@ -5,14 +5,19 @@ import * as firebase from 'firebase';
 @Injectable()
 export class GradebookProvider {
 
-	constructor() {}
+	username : string;
+
+	constructor() {
+
+		this.username = firebase.auth().currentUser.email.replace("@shreypandya.com", "");;
+
+	}
 
 	fetchAll(dataLit : string) {
 
-		var trimmedUsername = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
 		var classes = [];
 
-		firebase.database().ref(trimmedUsername + "/grades/" + dataLit).once("value").then(snapshot => {
+		firebase.database().ref(this.username + "/grades/" + dataLit).once("value").then(snapshot => {
 
 			var i = 0;
 
@@ -50,7 +55,7 @@ export class GradebookProvider {
 
 					//console.log("Calculated: " + grade);
 
-					//-------------------------------------------------------------
+
 
 					// ERROR CASE conditionals
 					// (In case something goes wrong)
@@ -81,9 +86,6 @@ export class GradebookProvider {
 
 					}
 
-					//-------------------------------------------------------------
-
-
 				});
 
 				//console.log("Excess weight: " + weightPool);
@@ -113,11 +115,9 @@ export class GradebookProvider {
 
 		return new Promise((resolve, reject) => {
 
-			// Get username
-			var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
 			var userClass = [];
 
-			firebase.database().ref(user + "/grades/" + markingPd + "/" + index + "/report").once("value").then(snapshot => {
+			firebase.database().ref(this.username + "/grades/" + markingPd + "/" + index + "/report").once("value").then(snapshot => {
 
 				snapshot.forEach(childSnapshot => {
 
@@ -130,7 +130,6 @@ export class GradebookProvider {
 
 				});
 
-				//-------------------------------------------------------------
 
 				// ERROR CASE conditionals
 				// (In case something goes wrong)
@@ -163,8 +162,6 @@ export class GradebookProvider {
 
 				}
 
-				//-------------------------------------------------------------
-
 			}).then(() => {resolve(userClass)});
 
 		});
@@ -177,12 +174,9 @@ export class GradebookProvider {
 
 		return new Promise((resolve, reject) => {
 
-
-			// Get username
-			var user = firebase.auth().currentUser.email.replace("@shreypandya.com", "");
 			var grades = [];
 
-			firebase.database().ref(user + "/grades/" + markingPd + "_old").once("value").then(snapshot => {
+			firebase.database().ref(this.username + "/grades/" + markingPd + "_old").once("value").then(snapshot => {
 
 				snapshot.forEach(childSnapshot => {
 
@@ -192,9 +186,25 @@ export class GradebookProvider {
 
 				});
 
-			}).then(() => {resolve(grades)});
+			}).then(() => { resolve(grades) });
 
 		});
+
+	}
+
+	fetchMP() {
+
+		return new Promise((resolve, reject) => {
+
+			var mp;
+
+			firebase.database().ref(this.username + "/user_data/current_mp").once("value").then(snapshot => {
+
+				mp = snapshot.val();
+
+			}).then(() => { resolve(mp) });
+
+		})
 
 	}
 

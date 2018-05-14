@@ -11,6 +11,17 @@
 		<ion-list>
 			<br>
 			<ion-item>
+				<ion-label>Time frame</ion-label>
+				<ion-select multiple="false"  [(ngModel)]="check.mp" name="mp">
+					<ion-option disabled selected>Choose an option...</ion-option>
+					<ion-option [value]="0">1ST</ion-option>
+					<ion-option [value]="1">2ND</ion-option>
+					<ion-option [value]="2">3RD</ion-option>
+					<ion-option [value]="3">4TH</ion-option>
+					<ion-option [value]="4">Final</ion-option>
+				</ion-select>
+			</ion-item>
+			<ion-item>
 				<ion-label>Class to calculate for</ion-label>
 				<ion-select multiple="false"  [(ngModel)]="check.class" name="class">
 					<ion-option disabled selected>Choose a class...</ion-option>
@@ -25,8 +36,8 @@
 		</ion-list>
 	</form>
 	<div style="display: block; padding: 5px;" *ngIf="calculated">
-	<h4>You need a {{results.targetGrade}}% in the {{results.name}} category to get a {{check.grade}}% overall.</h4>
-	<h4>You need a 100% on a {{results.pointsNeeded}}-pt {{results.name}} assignment to get a {{check.grade}}% overall.</h4>
+	<h4>You need a {{results.targetGrade}}% in the {{results.name}} category to get a {{check.grade}}% in "{{dataLits[check.mp]}}".</h4>
+	<h4>You need a 100% on a {{results.pointsNeeded}}-pt {{results.name}} assignment to get a {{check.grade}}% in "{{dataLits[check.mp]}}".</h4>
 	<hr>
 	<h4>You currently have a {{results.oldGrade}}% in the {{results.name}} category.</h4>
 	<h4>Grade History:</h4>

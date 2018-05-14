@@ -10,8 +10,9 @@ import { ChartsModule } from 'ng2-charts';
 export class CalcPage {
 
 	classes = [];
+	dataLits = ["1ST", "2ND", "3RD", "4TH", "Final"];
 	dataLit = "4TH";
-	check = {class: "", grade: ""};
+	check = {class: "", grade: "", mp: ""};
 
 	results : any = {};
 

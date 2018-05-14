@@ -17,6 +17,7 @@ export class GradesPage {
 	dataLit = "4TH";
 
 	loading;
+	markingPd;
 
 	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public gradebook : GradebookProvider) {
 
@@ -28,11 +29,16 @@ export class GradesPage {
 
 		});
 
-		console.log(this.mps);
+		gradebook.fetchMP().then(e => {
+
+			this.markingPd = this.dataLits.indexOf(e);
+			console.log(this.markingPd);
+
+		});
 
 	}
 
-	//------------------------------------------------
+	
 	// Loading screen code
 	showLoadingScreen() {
 
@@ -50,26 +56,6 @@ export class GradesPage {
 
 	}
 	//-------------------------------------------------
-
-	changeMP(e) {
-
-		switch (e.direction) {
-
-			case 2:
-				//right to left
-				
-				break;
-
-			case 4:
-				//left to right
-				break;
-
-			default:
-				break;
-
-		}
-
-	}
 
 	// Moves app to class overview page
 	showClass(index, markingPd) {
