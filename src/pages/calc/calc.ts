@@ -34,17 +34,23 @@ export class CalcPage {
   	lineChartType : string = 'line';
   	//---------------------------------------------
 
-  	calculated = false;
+	  calculated = false;
 
 	constructor(public navCtrl: NavController, public gradebook: GradebookProvider) {
 
-		this.classes = gradebook.fetchAll(this.dataLit);
+		gradebook.fetchMP().then(e => {
+
+			this.check.mp = this.dataLits.indexOf(e);
+			this.classes = gradebook.fetchAll(this.dataLits[this.check.mp]);
+
+		});
 
 	}
 
 	calculate() {
 
 		console.log("Calculating...");
+		console.log("MP: ", this.dataLits[this.check.mp]);
 
 		var pointsNeeded;
 		var graphData = [];
@@ -61,7 +67,7 @@ export class CalcPage {
 				// Calculate and display current grades to give a sense of context to the user
 				// Build a graph showing their grade history
 
-				var classGrades : any = this.gradebook.fetchClass(this.dataLit, element.index);
+				var classGrades : any = this.gradebook.fetchClass(this.dataLits[this.check.mp], element.index);
 
 				classGrades.then(value => {
 
@@ -121,7 +127,7 @@ export class CalcPage {
 				});
 
 
-				var gradeHistory : any = this.gradebook.fetchClassOld(this.dataLit, element.index);
+				var gradeHistory : any = this.gradebook.fetchClassOld(this.dataLits[this.check.mp], element.index);
 
 				// Add points to a line graph showing the change in grades over time
 				gradeHistory.then(value => {
@@ -138,6 +144,9 @@ export class CalcPage {
 
 
 					// Display the information to the user
+
+					this.lineChartData = [];
+
 					this.lineChartData.push({data: graphData, label: this.check.class});
 					this.lineChartLabels = Array(graphData.length).fill("");
 
