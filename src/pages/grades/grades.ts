@@ -23,12 +23,14 @@ export class GradesPage {
 
 		this.showLoadingScreen();
 
+		// get grade data
 		this.dataLits.forEach(element => {
 
 			this.mps.push(gradebook.fetchAll(element));
 
 		});
 
+		// get current marking period
 		gradebook.fetchMP().then(e => {
 
 			this.markingPd = this.dataLits.indexOf(e.toString());
@@ -55,7 +57,6 @@ export class GradesPage {
 		this.loading.dismiss();
 
 	}
-	//-------------------------------------------------
 
 	// Moves app to class overview page
 	showClass(index, markingPd) {

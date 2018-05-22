@@ -26,6 +26,7 @@ export class ClassPage {
 
 		this.generalClass = navParams.get("classData");
 
+		// get class grade data
 		gradebook.fetchClass(navParams.get("markingPd"), navParams.get("index")).then(value => {
 
 			this.classData = value;
@@ -33,7 +34,9 @@ export class ClassPage {
 		});
 
 	}
-	//--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 	// Sandbox mode code
 
 	toggleSandbox() {
@@ -92,6 +95,5 @@ export class ClassPage {
 		}
 
 	}
-	//--------------------------------------------------------------------------------------------------------------------------------------
 
 }

@@ -52,7 +52,8 @@ export class LoginPage {
 
 		this._AUTH.login(username, password).then((auth : any) => {
 
-			// moves user to main part of app
+			// once the user is signed in,
+			// move them into the main app
 			this.navCtrl.setRoot(TabsPage);
 
 		}).catch((error : any) => {
@@ -72,7 +73,8 @@ export class LoginPage {
 
 		this._AUTH.signup(username, password).then((auth : any) => {
 
-			// moves user to main part of app
+			// once the user is signed in,
+			// move them into the main app
 			this.navCtrl.setRoot(TabsPage);
 
 		}).catch((error : any) => {

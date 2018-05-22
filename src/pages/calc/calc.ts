@@ -16,9 +16,7 @@ export class CalcPage {
 
 	results : any = {};
 
-	//---------------------------------------------
 	//Set up graph variables
-
 	lineChartData : Array<any> = [];
   	lineChartLabels : Array<any> = [];
   	lineChartOptions : any = { responsive: true };
@@ -32,12 +30,12 @@ export class CalcPage {
     }];
   	lineChartLegend : boolean = false;
   	lineChartType : string = 'line';
-  	//---------------------------------------------
 
-	  calculated = false;
+	calculated = false;
 
 	constructor(public navCtrl: NavController, public gradebook: GradebookProvider) {
 
+		// get grade data
 		gradebook.fetchMP().then(e => {
 
 			this.check.mp = this.dataLits.indexOf(e.toString()).toString();

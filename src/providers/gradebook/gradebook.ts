@@ -9,6 +9,7 @@ export class GradebookProvider {
 
 	constructor() {
 
+		// trimming the username so it can be understood in the code
 		this.username = firebase.auth().currentUser.email.replace("@shreypandya.com", "");;
 
 	}
@@ -55,8 +56,7 @@ export class GradebookProvider {
 
 					//console.log("Calculated: " + grade);
 
-
-
+					
 					// ERROR CASE conditionals
 					// (In case something goes wrong)
 
@@ -162,14 +162,14 @@ export class GradebookProvider {
 
 				}
 
-			}).then(() => {resolve(userClass)});
+			}).then(() => { resolve(userClass) });
 
 		});
 
 	}
 
-	// This is used to get the grade history for a user
-
+	// get archived grade data for a marking period
+	// used for the grade history graph
 	fetchClassOld(markingPd : string, index : string) {
 
 		return new Promise((resolve, reject) => {
@@ -192,6 +192,8 @@ export class GradebookProvider {
 
 	}
 
+
+	// get current marking period
 	fetchMP() {
 
 		return new Promise((resolve, reject) => {
