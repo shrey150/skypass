@@ -31,7 +31,7 @@ export class GradesPage {
 
 		gradebook.fetchMP().then(e => {
 
-			this.markingPd = this.dataLits.indexOf(e);
+			this.markingPd = this.dataLits.indexOf(e.toString());
 			console.log(this.markingPd);
 
 		});

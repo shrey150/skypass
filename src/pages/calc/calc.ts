@@ -40,7 +40,7 @@ export class CalcPage {
 
 		gradebook.fetchMP().then(e => {
 
-			this.check.mp = this.dataLits.indexOf(e);
+			this.check.mp = this.dataLits.indexOf(e.toString()).toString();
 			this.classes = gradebook.fetchAll(this.dataLits[this.check.mp]);
 
 		});
@@ -146,7 +146,7 @@ export class CalcPage {
 					// Display the information to the user
 
 					this.lineChartData = [];
-
+					
 					this.lineChartData.push({data: graphData, label: this.check.class});
 					this.lineChartLabels = Array(graphData.length).fill("");
 

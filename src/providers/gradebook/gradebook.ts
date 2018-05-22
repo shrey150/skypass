@@ -196,7 +196,7 @@ export class GradebookProvider {
 
 		return new Promise((resolve, reject) => {
 
-			var mp;
+			var mp : string;
 
 			firebase.database().ref(this.username + "/user_data/current_mp").once("value").then(snapshot => {
 
